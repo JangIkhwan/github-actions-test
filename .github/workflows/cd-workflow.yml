@@ -63,17 +63,22 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           envs: GITHUB_SHA
           script: |
+            
             echo "✋🏻Stopping existing container"
             sudo docker stop test
             sudo docker rm test
-            
+
             sudo docker ps -a
-            
+
             echo "🥳 Pulling new image"
             sudo docker pull ${{ secrets.DOCKER_USERNICKNAME }}/${{ secrets.DOCKER_IMAGE }}
-            
+
             echo "🌱 Running new container"
-            sudo docker run -d -p 8000:8080 --name test ${{ secrets.DOCKER_USERNICKNAME }}/${{ secrets.DOCKER_IMAGE }}
+            sudo docker run -d \
+            -e DATASOURCE_URL=${{ secrets.RDS_URL }} \
+            -e DATASOURCE_USERNAME=${{ secrets.RDS_USERNAME }}\
+            -e DATASOURCE_PASSWORD=${{ secrets.RDS_PASSWORD }} \
+            -p 8000:8080 --name test ${{ secrets.DOCKER_USERNICKNAME }}/${{ secrets.DOCKER_IMAGE }}
 
             echo "🚮 Cleaning up old images"
             sudo docker image prune -f
