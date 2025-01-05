@@ -1,8 +1,12 @@
 package org.example.jpacrud.domain.product.controller;
 
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
-@RestController
+@Controller
 public class ProductController {
-
+    @GetMapping("test")
+    public String test(){
+        return "test";
+    }
 }
