@@ -76,7 +76,7 @@ jobs:
             echo "🌱 Running new container"
             sudo docker run -d \
             -e DATASOURCE_URL=${{ secrets.RDS_URL }} \
-            -e DATASOURCE_USERNAME=${{ secrets.RDS_USERNAME }}\
+            -e DATASOURCE_USERNAME=${{ secrets.RDS_USERNAME }} \
             -e DATASOURCE_PASSWORD=${{ secrets.RDS_PASSWORD }} \
             -p 8000:8080 --name test ${{ secrets.DOCKER_USERNICKNAME }}/${{ secrets.DOCKER_IMAGE }}
 
